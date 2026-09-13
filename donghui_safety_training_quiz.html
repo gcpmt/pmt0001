@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>東薈城職業安全與健康互動訓練</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Microsoft JhengHei",sans-serif;background:linear-gradient(135deg,#143d59,#1f7a8c);min-height:100vh;color:#18323d}.app{max-width:850px;margin:auto;padding:18px}.panel{background:#fff;border-radius:22px;padding:28px;box-shadow:0 12px 35px #09263366}h1{text-align:center;color:#143d59;margin:8px 0 5px}h2{color:#143d59}.sub{text-align:center;color:#62757d;margin-bottom:25px}.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#eaf6f7;border-radius:14px;padding:12px 16px;margin-bottom:20px;font-weight:bold}.progress{height:10px;background:#dce7e9;border-radius:10px;overflow:hidden;margin:12px 0 25px}.bar{height:100%;background:#f4a261;width:0;transition:.3s}.question{font-size:1.35rem;font-weight:bold;line-height:1.55;margin:20px 0}.options{display:grid;gap:12px}.option{border:2px solid #b8ccd0;background:#fff;border-radius:13px;padding:15px;text-align:left;font-size:1rem;cursor:pointer}.option:hover{border-color:#1f7a8c;background:#effafa}.option.correct{background:#d8f3dc;border-color:#2a9d8f}.option.wrong{background:#ffe0e0;border-color:#e76f51}.btn{border:0;border-radius:12px;padding:13px 21px;margin:8px 4px;background:#1f7a8c;color:#fff;font-weight:bold;cursor:pointer}.btn:hover{filter:brightness(1.1)}.btn.secondary{background:#607d86}.center{text-align:center}.hidden{display:none}.feedback{margin-top:18px;padding:14px;border-radius:12px;background:#fff4d6;line-height:1.6}.rank{display:flex;align-items:center;gap:12px;padding:12px;border-bottom:1px solid #e5eeee}.rank:last-child{border:0}.medal{font-size:1.4rem;width:35px}.result{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#eaf6f7;padding:18px;text-align:center;border-radius:14px}.stat strong{display:block;font-size:2rem;color:#1f7a8c}.type{font-size:.85rem;color:#1f7a8c;margin-top:20px;font-weight:bold}@media(max-width:600px){.panel{padding:20px}.question{font-size:1.15rem}.result{grid-template-columns:1fr}.top{font-size:.9rem}}
+</style></head>
+<body><div class="app"><div class="panel">
+<h1>東薈城職業安全與健康</h1><div class="sub">物業管理組互動培訓競答</div>
+<section id="intro"><p>本測驗根據「第五篇：職業安全與健康」培訓資料設計，共 10 題。請先輸入姓名，然後開始答題。</p><p>內容包括：安全政策、日常危害識別、個人防護裝備（PPE）、高空工作注意事項、緊急救援資源、Near-miss Reporting、ISO 45001/OHSMS，以及 BMU、吊船、電器與 AED 等安全重點。</p><div class="center"><input id="name" placeholder="輸入姓名或暱稱" style="padding:14px;border:2px solid #b8ccd0;border-radius:10px;width:90%;max-width:360px;font-size:1rem"><br><button class="btn" onclick="start()">開始答題</button></div></section>
+<section id="quiz" class="hidden"><div class="top"><span id="who"></span><span>分數：<b id="score">0</b></span><span id="count">1 / 10</span><span>限時：<b id="time">20</b> 秒</span></div><div class="progress"><div id="bar" class="bar"></div></div><div id="type" class="type"></div><div id="question" class="question"></div><div id="options" class="options"></div><div id="feedback" class="feedback hidden"></div><div class="center"><button id="next" class="btn hidden" onclick="next()">下一題</button></div></section>
+<section id="result" class="hidden"><h2 class="center">🎉 測驗完成</h2><div class="result"><div class="stat">總分<strong id="finalScore">0</strong></div><div class="stat">答對<strong id="finalCorrect">0/10</strong></div><div class="stat">準確率<strong id="accuracy">0%</strong></div></div><h2>答案檢討</h2><div id="review"></div><div class="center"><button class="btn" onclick="location.reload()">重新開始</button></div></section>
+</div></div>
+<script>
+const qs=[
+{t:'選擇題',q:'以下哪一項最符合本課程的安全與健康培訓目標？',o:['只學習如何使用消防設備','識別日常危害並正確使用個人防護裝備','只記住公司的口號','只處理已發生的意外'],a:1,e:'課程重點包括識別日常危害、正確使用 PPE、高空工作注意事項及緊急救援資源。'},
+{t:'是非題',q:'PPE（個人防護裝備）可以代替所有其他安全控制措施。',o:['正確','錯誤'],a:1,e:'PPE 是重要防護措施，但不應被視為代替其他安全程序、工程控制或風險管理。'},
+{t:'選擇題',q:'在工作現場發現被忽略的危險點，最適當的做法是？',o:['當作沒有看見','自行拆除所有設施','立即按程序向主管或相關部門報告','等到有人受傷才報告'],a:2,e:'及早識別及報告危害，有助於在意外發生前採取控制措施。'},
+{t:'情境題',q:'你發現吊船或 BMU 的欄杆狀況可疑，但工作尚未開始。你應該怎樣做？',o:['照常使用，完成工作先算','停止使用並通知主管／相關維修部門檢查','叫同事站在旁邊扶住欄杆','只拍照留底，不需報告'],a:1,e:'對高空工作設備有疑問時，應停止使用、隔離風險並按程序報告及檢查。'},
+{t:'選擇題',q:'進行高空工作前，最重要的安全原則之一是？',o:['只追求完成速度','確認設備、工作位置及相關防護措施安全','不需要聽取工作指示','只要戴普通帽便足夠'],a:1,e:'高空工作涉及嚴重墮下風險，必須遵守工作程序，確認設備及防護措施。'},
+{t:'是非題',q:'Near-miss（險失事故）即使沒有造成傷害，也應該報告。',o:['正確','錯誤'],a:0,e:'險失事故可反映潛在危害。及早報告有助於找出根本原因及防止事故重複發生。'},
+{t:'選擇題',q:'Near-miss Reporting 的主要目的為何？',o:['追究個別員工責任','隱瞞事故數字','識別潛在風險並改善安全措施','只作行政記錄'],a:2,e:'險失事故滙報機制重點是預防事故及持續改善，而不只是記錄或責備。'},
+{t:'選擇題',q:'ISO 45001 主要與哪一方面有關？',o:['職業安全與健康管理系統','商場銷售額','市場推廣','員工假期安排'],a:0,e:'ISO 45001 是職業安全與健康管理系統相關標準；課程亦提及 OHSMS。'},
+{t:'是非題',q:'遇到緊急事故時，保持冷靜、專心聆聽及選擇安全逃生位置是有幫助的做法。',o:['正確','錯誤'],a:0,e:'培訓資料列出保持冷靜、專心聆聽及選擇可逃走位置等應變重點。'},
+{t:'選擇題',q:'以下哪一組屬於課程提及的緊急救援或安全資源／設備？',o:['AED、滅火設備及相關緊急救援資源','咖啡機、打印機及收銀機','宣傳單張及音響設備','裝飾燈及展示櫃'],a:0,e:'課程內容提及 AED、緊急救援資源，以及工作現場的設備安全注意事項。'}
+];
+let i=0,score=0,correct=0,name='',timer,answered=false,history=[];
+function $(id){return document.getElementById(id)}
+function start(){name=$('name').value.trim()||'匿名員工';$('who').textContent='👤 '+name;$('intro').classList.add('hidden');$('quiz').classList.remove('hidden');render()}
+function render(){answered=false;const x=qs[i];$('count').textContent=`${i+1} / ${qs.length}`;$('score').textContent=score;$('type').textContent=x.t;$('question').textContent=x.q;$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('bar').style.width=((i)/qs.length*100)+'%';const box=$('options');box.innerHTML='';x.o.forEach((v,n)=>{const b=document.createElement('button');b.className='option';b.textContent=v;b.onclick=()=>answer(n);box.appendChild(b)});startTimer()}
+function startTimer(){clearInterval(timer);let left=20;$('time').textContent=left;timer=setInterval(()=>{left--;$('time').textContent=left;if(left<=0){clearInterval(timer);answer(-1)}},1000)}
+function answer(n){if(answered)return;answered=true;clearInterval(timer);const x=qs[i],ok=n===x.a;if(ok){score+=10;correct++}history.push({x,n,ok});document.querySelectorAll('.option').forEach((b,k)=>{b.disabled=true;if(k===x.a)b.classList.add('correct');else if(k===n)b.classList.add('wrong')});$('score').textContent=score;$('feedback').innerHTML=(ok?'✅ 答對！':'❌ 答錯／超時。')+'<br>'+x.e;$('feedback').classList.remove('hidden');$('next').textContent=i===qs.length-1?'查看結果':'下一題';$('next').classList.remove('hidden');$('bar').style.width=((i+1)/qs.length*100)+'%'}
+function next(){i++;if(i>=qs.length)finish();else render()}
+function finish(){clearInterval(timer);$('quiz').classList.add('hidden');$('result').classList.remove('hidden');$('finalScore').textContent=score;$('finalCorrect').textContent=`${correct}/${qs.length}`;$('accuracy').textContent=Math.round(correct/qs.length*100)+'%';$('review').innerHTML=history.map((h,n)=>`<div style="padding:12px;border-bottom:1px solid #e5eeee"><b>${n+1}. ${h.ok?'✅':'❌'} ${h.x.q}</b><br>正確答案：${h.x.o[h.x.a]}<br><small>${h.x.e}</small></div>`).join('')}
+</script></body></html>
